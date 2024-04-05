@@ -2,6 +2,7 @@ version: "3.9"
 
 services:
   mysql:
+    container_name: mysql-db
     image: mysql:latest
     ports:
       - 3306:3306
@@ -9,10 +10,13 @@ services:
       - ~/.dev.env
     #environment:
      # - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - ~/mysql-data:/var/lib/mysql # Ajout d'un volume pour la persistance
     networks:
       zenml-services-network:
         ipv4_address: 192.168.1.25
   zenml:
+    container_name: zenml-server
     image: zenmldocker/zenml-server
     ports:
       - "8080:8080"
